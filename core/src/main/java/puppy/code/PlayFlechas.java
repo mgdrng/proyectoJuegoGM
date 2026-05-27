@@ -33,7 +33,6 @@ public class PlayFlechas extends BaseScreen {
     private float panelX  = 10f;
 
     private int vidas  = 3;
-    private int puntos = 0;
 
     private float margenGolpe = 30f;
 
@@ -48,17 +47,18 @@ public class PlayFlechas extends BaseScreen {
 
     @Override
     public void show() {
-        lote          = new SpriteBatch();
+        GestorPuntaje.getInstance().setPuntajeActual(0);
+        lote = new SpriteBatch();
         dibujoPaneles = new ShapeRenderer();
-        font          = new BitmapFont();
+        font = new BitmapFont();
 
-        flechaArriba    = new Texture("flechaUp.png");
-        flechaAbajo     = new Texture("flechaDown.png");
+        flechaArriba = new Texture("flechaUp.png");
+        flechaAbajo = new Texture("flechaDown.png");
         flechaIzquierda = new Texture("flechaLeft.png");
-        flechaDerecha   = new Texture("flechaRight.png");
+        flechaDerecha = new Texture("flechaRight.png");
 
-        float screenWidth   = Gdx.graphics.getWidth();
-        float centerX       = screenWidth / 2f;
+        float screenWidth = Gdx.graphics.getWidth();
+        float centerX = screenWidth / 2f;
         float totalCarriles = (4 * tamanio) + (3 * spacing);
         inicioX = centerX - (totalCarriles / 2f);
     }
@@ -100,7 +100,9 @@ public class PlayFlechas extends BaseScreen {
             if (Math.abs(f.getY() - golpeY) <= margenGolpe) {
                 if (teclaCorrecta(f.getTipo(), izq, abajo, arriba, der)) {
                     flechas.removeIndex(i);
-                    puntos += 10;
+                    GestorPuntaje.getInstance().setPuntajeActual(
+                        GestorPuntaje.getInstance().getPuntajeActual() + 10
+                    );
                 }
             }
         }
@@ -117,7 +119,7 @@ public class PlayFlechas extends BaseScreen {
 
         lote.begin();
 
-        font.draw(lote, "Puntos: " + puntos, 5, Gdx.graphics.getHeight() - 5);
+        font.draw(lote, "Puntos: " + GestorPuntaje.getInstance().getPuntajeActual(), 5, Gdx.graphics.getHeight() - 5);
         font.draw(lote, "Vidas: "  + vidas,  Gdx.graphics.getWidth() - 120,
             Gdx.graphics.getHeight() - 5);
 
@@ -130,9 +132,9 @@ public class PlayFlechas extends BaseScreen {
         }
 
         lote.draw(flechaIzquierda, carrilX(0), golpeY, tamanio, tamanio);
-        lote.draw(flechaAbajo,     carrilX(1), golpeY, tamanio, tamanio);
-        lote.draw(flechaArriba,    carrilX(2), golpeY, tamanio, tamanio);
-        lote.draw(flechaDerecha,   carrilX(3), golpeY, tamanio, tamanio);
+        lote.draw(flechaAbajo, carrilX(1), golpeY, tamanio, tamanio);
+        lote.draw(flechaArriba, carrilX(2), golpeY, tamanio, tamanio);
+        lote.draw(flechaDerecha, carrilX(3), golpeY, tamanio, tamanio);
 
         lote.end();
     }

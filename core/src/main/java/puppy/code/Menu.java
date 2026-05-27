@@ -37,6 +37,7 @@ public class Menu extends BaseScreen{
         font.draw(batch, "[1] Facil", 200, 310);
         font.draw(batch, "[2] Normal", 200, 280);
         font.draw(batch, "[3] Dificil", 200, 250);
+        font.draw(batch, "Mejor puntaje: " + GestorPuntaje.getInstance().getPuntajeMaximo(), 200, 200);
         batch.end();
     }
 
