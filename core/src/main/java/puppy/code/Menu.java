@@ -1,4 +1,5 @@
 package puppy.code;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,11 +23,11 @@ public class Menu extends BaseScreen{
     @Override
     protected void update(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
-            juego.setScreen(new PlayGame(juego, new ModoFacil()));
+            juego.setScreen(new PlayFlechas(juego, new ModoFacil()));
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2))
-            juego.setScreen(new PlayGame(juego, new ModoNormal()));
+            juego.setScreen(new PlayFlechas(juego, new ModoNormal()));
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3))
-            juego.setScreen(new PlayGame(juego, new ModoDificil()));
+            juego.setScreen(new PlayFlechas(juego, new ModoDificil()));
     }
 
     @Override

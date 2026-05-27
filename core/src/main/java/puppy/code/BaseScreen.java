@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Gdx;
 
-public class BaseScreen implements Screen{
+public abstract class BaseScreen implements Screen{
     @Override
     public final void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
