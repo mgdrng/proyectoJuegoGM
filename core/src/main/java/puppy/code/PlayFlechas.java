@@ -24,6 +24,7 @@ public class PlayFlechas extends BaseScreen {
     private Random rng = new Random();
 
     private ModoDificultad dificultad;
+    private Canciones cancionNivel;
 
     private float tamanio = 45f;
     private float spacing = 55f;
@@ -40,9 +41,10 @@ public class PlayFlechas extends BaseScreen {
     private int tiempoHerido    = 0;
     private int tiempoHeridoMax = 50;
 
-    public PlayFlechas(Main juego, ModoDificultad dificultad) {
+    public PlayFlechas(Main juego, ModoDificultad dificultad, Canciones cancionNivel) {
         this.juego = juego;
         this.dificultad = dificultad;
+        this.cancionNivel = cancionNivel;
     }
 
     @Override
@@ -61,11 +63,18 @@ public class PlayFlechas extends BaseScreen {
         float centerX = screenWidth / 2f;
         float totalCarriles = (4 * tamanio) + (3 * spacing);
         inicioX = centerX - (totalCarriles / 2f);
+        GestorAudio.getInstance().reproducir(cancionNivel.getArchivo());
     }
 
     @Override
     protected void update(float tiempoFrame) {
         if (vidas <= 0) {
+            GestorAudio.getInstance().detener();
+            juego.setScreen(new Menu(juego));
+            return;
+        }
+        if (GestorAudio.getInstance().isCancionTerminada()) {
+            GestorAudio.getInstance().detener();
             juego.setScreen(new Menu(juego));
             return;
         }
@@ -79,7 +88,11 @@ public class PlayFlechas extends BaseScreen {
         if (spawnTimer >= dificultad.getIntervaloSpawn()) {
             spawnTimer = 0f;
             int carril = rng.nextInt(4);
-            flechas.add(new Flechas(carril, carrilX(carril), Gdx.graphics.getHeight()));
+            flechas.add(new FlechaBuilder()
+                .setTipo(carril)
+                .setX(carrilX(carril))
+                .setY(Gdx.graphics.getHeight())
+                .build());
         }
 
         boolean izq    = Gdx.input.isKeyJustPressed(Input.Keys.LEFT);
@@ -131,11 +144,24 @@ public class PlayFlechas extends BaseScreen {
             }
         }
 
-        lote.draw(flechaIzquierda, carrilX(0), golpeY, tamanio, tamanio);
-        lote.draw(flechaAbajo, carrilX(1), golpeY, tamanio, tamanio);
-        lote.draw(flechaArriba, carrilX(2), golpeY, tamanio, tamanio);
-        lote.draw(flechaDerecha, carrilX(3), golpeY, tamanio, tamanio);
+        boolean izqPress    = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean abajoPress  = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean arribaPress = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean derPress    = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
+        lote.setColor(1f, 0f, 1f, 1f); // Morado
+        dibujarFlechaBase(flechaIzquierda, carrilX(0), izqPress);
+
+        lote.setColor(0f, 1f, 1f, 1f); // Celeste
+        dibujarFlechaBase(flechaAbajo, carrilX(1), abajoPress);
+
+        lote.setColor(0f, 1f, 0f, 1f); // Verde
+        dibujarFlechaBase(flechaArriba, carrilX(2), arribaPress);
+
+        lote.setColor(1f, 0f, 0f, 1f); // Rojo
+        dibujarFlechaBase(flechaDerecha, carrilX(3), derPress);
+
+        lote.setColor(1f, 1f, 1f, 1f); // Volver al color blanco base
         lote.end();
     }
 
@@ -148,6 +174,8 @@ public class PlayFlechas extends BaseScreen {
         flechaAbajo.dispose();
         flechaIzquierda.dispose();
         flechaDerecha.dispose();
+
+        GestorAudio.getInstance().dispose();
     }
 
     private void dañar() {
@@ -175,6 +203,27 @@ public class PlayFlechas extends BaseScreen {
             case 1:  return flechaAbajo;
             case 2:  return flechaArriba;
             default: return flechaDerecha;
+        }
+    }
+    private void setColorPorTipo(int tipo) {
+        switch (tipo) {
+            case 0: lote.setColor(1f, 0f, 1f, 1f); break; // Izquierda
+            case 1: lote.setColor(0f, 1f, 1f, 1f); break; // Abajo
+            case 2: lote.setColor(0f, 1f, 0f, 1f); break; // Arriba
+            default: lote.setColor(1f, 0f, 0f, 1f); break; // Derecha
+        }
+    }
+
+    private void dibujarFlechaBase(Texture tex, float x, boolean presionada) {
+        if (presionada) {
+
+            float nuevoTamanio = tamanio * 0.8f;
+            float offset = (tamanio - nuevoTamanio) / 2f;
+            lote.setColor(lote.getColor().r * 0.6f, lote.getColor().g * 0.6f, lote.getColor().b * 0.6f, 1f);
+            lote.draw(tex, x + offset, golpeY + offset, nuevoTamanio, nuevoTamanio);
+        } else {
+
+            lote.draw(tex, x, golpeY, tamanio, tamanio);
         }
     }
 }
