@@ -40,6 +40,9 @@ public class PlayFlechas extends BaseScreen {
     private boolean herido = false;
     private int tiempoHerido    = 0;
     private int tiempoHeridoMax = 50;
+    private float tiempoCancion = 0f;
+    private float duracionCancion = 0f;
+    private boolean partidaTerminada = false;
 
     public PlayFlechas(Main juego, ModoDificultad dificultad, Canciones cancionNivel) {
         this.juego = juego;
@@ -63,19 +66,33 @@ public class PlayFlechas extends BaseScreen {
         float centerX = screenWidth / 2f;
         float totalCarriles = (4 * tamanio) + (3 * spacing);
         inicioX = centerX - (totalCarriles / 2f);
+
+        tiempoCancion = 0f;
+        duracionCancion = obtenerDuracionCancion(cancionNivel.getArchivo());
         GestorAudio.getInstance().reproducir(cancionNivel.getArchivo());
     }
 
     @Override
     protected void update(float tiempoFrame) {
-        if (vidas <= 0) {
-            GestorAudio.getInstance().detener();
-            juego.setScreen(new Menu(juego));
+        if (partidaTerminada) {
             return;
         }
+
+        tiempoCancion += tiempoFrame;
+        System.out.println(tiempoCancion);
+
+        if (vidas <= 0) {
+            finalizarPartida();
+            return;
+        }
+
+        if (tiempoCancion >= duracionCancion) {
+            finalizarPartida();
+            return;
+        }
+
         if (GestorAudio.getInstance().isCancionTerminada()) {
-            GestorAudio.getInstance().detener();
-            juego.setScreen(new Menu(juego));
+            finalizarPartida();
             return;
         }
 
@@ -225,5 +242,33 @@ public class PlayFlechas extends BaseScreen {
 
             lote.draw(tex, x, golpeY, tamanio, tamanio);
         }
+    }
+    private float obtenerDuracionCancion(String archivo) {
+        if (archivo.equals("FireForce.mp3")) {
+            return 91f;
+        }
+
+        if (archivo.equals("Testeo.mp3")) {
+            return 10f;
+        }
+
+        if (archivo.equals("trap.mp3")) {
+            return 120f;
+        }
+
+        return 60f;
+    }
+
+    private void finalizarPartida() {
+        if (partidaTerminada) {
+            return;
+        }
+
+        partidaTerminada = true;
+
+        GestorAudio.getInstance().detener();
+        flechas.clear();
+
+        juego.setScreen(new Menu(juego));
     }
 }

@@ -2,7 +2,7 @@ package puppy.code;
 
 public class ModoDificil implements ModoDificultad{
     @Override public float  getVelocidad(){
-        return 1000f;
+        return 500f;
     }
 
     @Override public float  getIntervaloSpawn(){

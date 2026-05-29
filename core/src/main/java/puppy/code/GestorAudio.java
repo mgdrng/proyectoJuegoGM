@@ -11,6 +11,7 @@ public class GestorAudio {
     private boolean cancionYaEmpezo = false;
     private float ultimaPosicion = 0f;
     private int framesAtascado = 0;
+    private boolean terminoPorListener = false;
 
     private GestorAudio() {
         repertorio = new Array<Canciones>();
@@ -41,10 +42,25 @@ public class GestorAudio {
         cancionYaEmpezo = false;
         ultimaPosicion = 0f;
         framesAtascado = 0;
+        terminoPorListener = false;
 
         musicaActual = Gdx.audio.newMusic(Gdx.files.internal(rutaArchivo));
 
         musicaActual.setLooping(false);
+
+        musicaActual.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(final Music music) {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (musicaActual == music) {
+                            terminoPorListener = true;
+                        }
+                    }
+                });
+            }
+        });
 
         musicaActual.play();
     }
@@ -53,6 +69,11 @@ public class GestorAudio {
         if (musicaActual != null) {
             musicaActual.stop();
         }
+
+        cancionYaEmpezo = false;
+        ultimaPosicion = 0f;
+        framesAtascado = 0;
+        terminoPorListener = false;
     }
 
     public void dispose() {
@@ -61,6 +82,10 @@ public class GestorAudio {
         }
     }
     public boolean isCancionTerminada() {
+        if (terminoPorListener) {
+            return true;
+        }
+
         if (musicaActual != null) {
 
             if (musicaActual.isPlaying()) {
