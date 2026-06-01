@@ -249,11 +249,11 @@ public class PlayFlechas extends BaseScreen {
         }
 
         if (archivo.equals("Testeo.mp3")) {
-            return 10f;
+            return 12f;
         }
 
-        if (archivo.equals("trap.mp3")) {
-            return 120f;
+        if (archivo.equals("BlackClover.mp3")) {
+            return 90f;
         }
 
         return 60f;

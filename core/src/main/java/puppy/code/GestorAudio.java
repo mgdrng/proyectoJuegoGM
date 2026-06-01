@@ -17,8 +17,8 @@ public class GestorAudio {
         repertorio = new Array<Canciones>();
 
         repertorio.add(new Canciones("Fire Force OP1", "FireForce.mp3"));
-        repertorio.add(new Canciones("Testeo ", "Testeo.mp3"));
-        repertorio.add(new Canciones("Trap Hardcore", "trap.mp3"));
+        repertorio.add(new Canciones("Precoz ", "Testeo.mp3"));
+        repertorio.add(new Canciones("BlackClover OP1", "BlackClover.mp3"));
     }
 
     public static GestorAudio getInstance() {
