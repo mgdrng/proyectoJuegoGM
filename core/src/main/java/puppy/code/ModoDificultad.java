@@ -7,4 +7,5 @@ la dificultad del juego sin modificar la lógica principal de PlayFlechas.
 public interface ModoDificultad {
     float getVelocidad();
     float getIntervaloSpawn();
+    String getNombre();
 }
