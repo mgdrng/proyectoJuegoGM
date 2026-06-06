@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Array;
 
+/* se aplica singleton en GestorAudio, ya que asegura que solo exista un objeto GestorAudio para controlar los audios
+del programa para evitar que se reproduzcan varias músicas a la vez
+*/
+
 public class GestorAudio {
     private static GestorAudio instancia;
     private Array<Canciones> repertorio;
@@ -48,6 +52,7 @@ public class GestorAudio {
 
         musicaActual.setLooping(false);
 
+        //interfaz interna de import com.badlogic.gdx.audio.Music;
         musicaActual.setOnCompletionListener(new Music.OnCompletionListener() {
             @Override
             public void onCompletion(final Music music) {

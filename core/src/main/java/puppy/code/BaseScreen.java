@@ -4,6 +4,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Gdx;
 
+/*Se aplica Template Method en BaseScreen, ya que define el
+ orden fijo de ejecución para todas las pantallas, y cada clase
+ hija implementa sus propios métodos update() y draw().
+ */
+
 public abstract class BaseScreen implements Screen{
     @Override
     public final void render(float delta) {

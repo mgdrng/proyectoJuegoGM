@@ -1,5 +1,10 @@
 package puppy.code;
 
+/*Se aplica Builder en FlechaBuilder, ya que permite
+  construir objetos Flechas paso a paso, manteniendo la lógica
+  de creación separada de PlayFlechas.
+ */
+
 public class FlechaBuilder {
     private int tipo;
     private float x;

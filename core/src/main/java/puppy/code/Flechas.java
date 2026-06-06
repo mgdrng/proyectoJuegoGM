@@ -1,5 +1,6 @@
 package puppy.code;
 
+
 public class Flechas {
     private int   tipo; // 0=izquierda, 1=abajo, 2=arriba, 3=derecha
     private float x;

@@ -1,5 +1,9 @@
 package puppy.code;
 
+/*Se aplica Singleton en GestorPuntaje, ya que asegura que solo exista un objeto para mantener
+el puntaje consistente entre partidas
+ */
+
 public class GestorPuntaje {
     private static GestorPuntaje gestor;
     private int puntajeMaximo = 0;
