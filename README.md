@@ -10,7 +10,7 @@ basado en el juego GameLluvia2024.
 
 ## Requisitos previos
 - IntelliJ IDEA instalado
-- Java JDK 8 o superior
+- Java JDK 8 o JDK 11
 
 ## Instrucciones de instalación y ejecución
 
