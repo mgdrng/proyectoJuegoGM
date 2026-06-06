@@ -1,33 +1,34 @@
-# GameLluvia2024
+## Juego de Ritmo - Proyecto videojuego (GM)
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+Juego de ritmo musical desarrollado en Java con LibGDX, 
+basado en el juego GameLluvia2024.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## Integrantes
+- Martin Gonzalez
+- Gabriel Pehuenche
+- Henrry Huerta
 
-## Platforms
+## Requisitos previos
+- IntelliJ IDEA instalado
+- Java JDK 8 o superior
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+## Instrucciones de instalación y ejecución
 
-## Gradle
+1. Clonar el repositorio:
+git clone https://github.com/mgdrng/proyectoJuegoGM.git
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+2. Abrir IntelliJ IDEA y seleccionar "Open", 
+luego buscar la carpeta del proyecto descargado.
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+3. Esperar a que IntelliJ importe el proyecto 
+y descargue las dependencias de Gradle automáticamente.
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+4. Ejecutar el proyecto con:
+./gradlew desktop:run
+
+5. El juego iniciará automáticamente.
+
+## Controles
+- Flechas ← → para cambiar canción en el menú
+- Teclas 1, 2, 3 para seleccionar dificultad
+- Flechas ← ↓ ↑ → para golpear las notas durante la partida
