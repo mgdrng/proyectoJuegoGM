@@ -79,7 +79,6 @@ public class PlayFlechas extends BaseScreen {
         }
 
         tiempoCancion += tiempoFrame;
-        System.out.println(tiempoCancion);
 
         if (vidas <= 0) {
             finalizarPartida();
@@ -131,8 +130,18 @@ public class PlayFlechas extends BaseScreen {
                 if (teclaCorrecta(f.getTipo(), izq, abajo, arriba, der)) {
                     flechas.removeIndex(i);
                     GestorPuntaje.getInstance().setPuntajeActual(
-                        GestorPuntaje.getInstance().getPuntajeActual() + 10
-                    );
+                        GestorPuntaje.getInstance().getPuntajeActual() + 10);
+
+                    // cambia de dificultad cada 150/300 puntos según el modo (Strategy)
+                    int puntos = GestorPuntaje.getInstance().getPuntajeActual();
+                    int ciclo = puntos % 600;
+                    if (ciclo >= 300) {
+                        dificultad = new ModoDificil();
+                    } else if (ciclo >= 150) {
+                        dificultad = new ModoNormal();
+                    } else {
+                        dificultad = new ModoFacil();
+                    }
                 }
             }
         }
